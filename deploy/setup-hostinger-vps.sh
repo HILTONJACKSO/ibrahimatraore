@@ -1,80 +1,86 @@
 #!/usr/bin/env bash
 # ============================================================================
-# AUTOMATED HOSTINGER VPS SETUP SCRIPT FOR: ibrahimatraore.net
+# SAFE MULTI-SITE HOSTINGER VPS DEPLOYMENT SCRIPT FOR: ibrahimatraore.net
 # Executive Website: Ibrahima Traore (CEO of Sport World Africa & Kouankan IV SL)
 # Official Email:    ceo@ibrahimatraore.net
 #
-# Usage on Ubuntu/Debian Hostinger VPS (as root):
-#   bash setup-hostinger-vps.sh https://github.com/YOUR_USERNAME/YOUR_REPO.git
+# SAFE FOR MULTI-SITE VPS:
+# - Does NOT remove /etc/nginx/sites-enabled/default or any other site config
+# - Does NOT alter existing PM2 apps, databases, or firewall rules
+# - Only adds /var/www/ibrahimatraore.net, PM2 app "ibrahimatraore-web" (port 3008),
+#   and /etc/nginx/sites-available/ibrahimatraore.net
 # ============================================================================
 
 set -euo pipefail
 
-REPO_URL="${1:-}"
+REPO_URL="${1:-https://github.com/HILTONJACKSO/ibrahimatraore.git}"
 APP_DIR="/var/www/ibrahimatraore.net"
 DOMAIN="ibrahimatraore.net"
 WWW_DOMAIN="www.ibrahimatraore.net"
 ADMIN_EMAIL="ceo@ibrahimatraore.net"
 
-if [ -z "$REPO_URL" ]; then
-  echo "Usage: bash setup-hostinger-vps.sh <GITHUB_REPO_URL>"
-  echo "Example: bash setup-hostinger-vps.sh https://github.com/your-org/ibrahimatraore-website.git"
-  exit 1
+echo "==> [1/5] Checking required tools (git, nginx, node, pm2) without touching existing services..."
+if ! command -v git >/dev/null 2>&1; then
+  apt-get update -y && apt-get install -y git
 fi
-
-echo "==> [1/7] Updating Ubuntu/Debian packages and installing Nginx, Git, Certbot, UFW..."
-apt-get update -y
-apt-get install -y curl git nginx certbot python3-certbot-nginx ufw build-essential
-
-echo "==> [2/7] Installing Node.js 20 LTS and PM2..."
+if ! command -v nginx >/dev/null 2>&1; then
+  apt-get update -y && apt-get install -y nginx
+fi
 if ! command -v node >/dev/null 2>&1; then
   curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
   apt-get install -y nodejs
 fi
-npm install -g pm2
+if ! command -v pm2 >/dev/null 2>&1; then
+  npm install -g pm2
+fi
 
-echo "==> [3/7] Cloning or updating repository in ${APP_DIR}..."
+echo "==> [2/5] Checking port 3008 is free (protects your other sites)..."
+if ss -tln | grep -q ':3008 ' && ! pm2 describe ibrahimatraore-web >/dev/null 2>&1; then
+  echo "ERROR: Port 3008 is already used by another service on this VPS."
+  echo "Pick a free port, then edit 'args' and 'PORT' in ecosystem.config.cjs and proxy_pass in deploy/nginx-ibrahimatraore.net.conf."
+  echo "Ports currently listening:"
+  ss -tlnp | grep LISTEN
+  exit 1
+fi
+
+echo "==> Cloning or updating ${REPO_URL} in ${APP_DIR}..."
 mkdir -p /var/www
 if [ -d "${APP_DIR}/.git" ]; then
   cd "${APP_DIR}"
-  git pull origin main
+  git fetch origin
+  git reset --hard origin/main
 else
   git clone "${REPO_URL}" "${APP_DIR}"
   cd "${APP_DIR}"
 fi
 
-echo "==> [4/7] Creating production .env file if not already present..."
+echo "==> [3/5] Ensuring production .env exists..."
 if [ ! -f "${APP_DIR}/.env" ]; then
   cp "${APP_DIR}/.env.example" "${APP_DIR}/.env"
   echo "Created ${APP_DIR}/.env from .env.example."
-  echo "IMPORTANT: Edit ${APP_DIR}/.env to add your SMTP_PASS for ceo@ibrahimatraore.net."
 fi
 
-echo "==> [5/7] Installing dependencies and building Next.js production bundle..."
+echo "==> [4/5] Installing dependencies and building Next.js production bundle..."
 cd "${APP_DIR}"
 npm ci
 npm run build
 
-echo "==> [6/7] Starting application with PM2 on port 3008..."
-pm2 delete ibrahimatraore-web 2>/dev/null || true
-pm2 start ecosystem.config.cjs
+echo "==> [5/5] Starting/Reloading ONLY 'ibrahimatraore-web' in PM2 (port 3008) & adding Nginx vhost..."
+pm2 reload ibrahimatraore-web --update-env 2>/dev/null || pm2 start ecosystem.config.cjs
 pm2 save
-pm2 startup systemd -u root --hp /root || true
 
-echo "==> [7/7] Configuring Nginx & Firewall for ${DOMAIN}..."
 cp "${APP_DIR}/deploy/nginx-ibrahimatraore.net.conf" /etc/nginx/sites-available/ibrahimatraore.net
 ln -sf /etc/nginx/sites-available/ibrahimatraore.net /etc/nginx/sites-enabled/ibrahimatraore.net
-rm -f /etc/nginx/sites-enabled/default
-nginx -t
-systemctl restart nginx
 
-ufw allow OpenSSH
-ufw allow 'Nginx Full'
-ufw --force enable
+# Test Nginx configuration before reloading so existing sites are never interrupted
+nginx -t
+systemctl reload nginx
 
 echo ""
 echo "============================================================================"
-echo " Deployment Complete for ${DOMAIN}!"
-echo " Next Step — Enable Free Let's Encrypt HTTPS SSL Certificate:"
-echo "   certbot --nginx -d ${DOMAIN} -d ${WWW_DOMAIN} --non-interactive --agree-tos -m ${ADMIN_EMAIL} --redirect"
+echo " Safe Multi-Site Deployment Complete for ${DOMAIN}!"
+echo " App Directory : ${APP_DIR}"
+echo " Local Port    : 127.0.0.1:3008 (PM2 process: ibrahimatraore-web)"
+echo " Nginx Config  : /etc/nginx/sites-available/ibrahimatraore.net"
+echo " Optional SSL  : certbot --nginx -d ${DOMAIN} -d ${WWW_DOMAIN} --non-interactive --agree-tos -m ${ADMIN_EMAIL} --redirect"
 echo "============================================================================"
