@@ -10,7 +10,7 @@ export const SITE_CONFIG = {
   preferredHost: process.env.NEXT_PUBLIC_PREFERRED_HOST || 'ibrahimatraore.net',
   googleSiteVerification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '',
   bingSiteVerification: process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION || '',
-  verifiedEmail: process.env.NEXT_PUBLIC_VERIFIED_EMAIL || 'ceo@ibrahimatraore.net',
+  verifiedEmail: process.env.NEXT_PUBLIC_VERIFIED_EMAIL || '',
   socialLinks: {
     linkedin: process.env.NEXT_PUBLIC_LINKEDIN_URL || '',
   },

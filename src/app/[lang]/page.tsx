@@ -51,9 +51,52 @@ export default async function HomePage({
     <>
       <StructuredData locale={lang} dict={dict} page="home" />
 
-      {/* 1. HERO SECTION */}
-      <section className="hero-section section-ivory animate-editorial">
-        <div className="container">
+      {/* 1. HERO SECTION (DEEP FOREST GREEN EXECUTIVE STAGE) */}
+      <section className="hero-section section-dark animate-editorial">
+        {/* Subtle Architectural Pitch & Meridian Watermark */}
+        <svg
+          className="hero-bg-pitch-geometry"
+          viewBox="0 0 1440 720"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <circle
+            cx="1120"
+            cy="360"
+            r="310"
+            stroke="#A17D43"
+            strokeOpacity="0.11"
+            strokeWidth="1"
+          />
+          <circle
+            cx="1120"
+            cy="360"
+            r="190"
+            stroke="#F7F5EF"
+            strokeOpacity="0.06"
+            strokeWidth="1"
+            strokeDasharray="6 8"
+          />
+          <line
+            x1="1120"
+            y1="0"
+            x2="1120"
+            y2="720"
+            stroke="#A17D43"
+            strokeOpacity="0.09"
+            strokeWidth="1"
+          />
+          <path
+            d="M 140 640 Q 620 420 1280 110"
+            stroke="#A17D43"
+            strokeOpacity="0.14"
+            strokeWidth="1.2"
+            fill="none"
+          />
+        </svg>
+
+        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <div className="hero-grid">
             <div>
               <span className="eyebrow">{hero.eyebrow}</span>
@@ -65,14 +108,14 @@ export default async function HomePage({
               <div className="btn-group">
                 <Link
                   href={getLocalizedPath(lang, 'companies')}
-                  className="btn btn-primary"
+                  className="btn btn-ivory"
                 >
                   <span>{hero.primaryAction}</span>
                   <span aria-hidden="true">→</span>
                 </Link>
                 <Link
                   href={getLocalizedPath(lang, 'profile')}
-                  className="btn btn-secondary"
+                  className="btn btn-outline-ivory"
                 >
                   <span>{hero.secondaryAction}</span>
                 </Link>

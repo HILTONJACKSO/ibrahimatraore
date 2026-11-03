@@ -19,7 +19,6 @@ module.exports = {
         NODE_ENV: 'production',
         PORT: 3008,
         NEXT_PUBLIC_SITE_URL: 'https://ibrahimatraore.net',
-        NEXT_PUBLIC_VERIFIED_EMAIL: 'ceo@ibrahimatraore.net',
         CONTACT_RECIPIENT_EMAIL: 'ceo@ibrahimatraore.net',
         CONTACT_FROM_EMAIL: 'ceo@ibrahimatraore.net',
       },

@@ -132,24 +132,13 @@ export function ContactForm({ locale, dict }: ContactFormProps) {
     <div className="contact-form-card">
       {status === 'success' && (
         <div className="form-alert form-alert-success" role="status" aria-live="polite">
-          <p style={{ marginBottom: '0.35rem' }}>{f.successMessage}</p>
-          <p style={{ fontSize: '0.9rem', opacity: 0.9, margin: 0 }}>
-            <strong>ceo@ibrahimatraore.net</strong>
-          </p>
+          {f.successMessage}
         </div>
       )}
 
       {status === 'error' && (
         <div className="form-alert form-alert-error" role="alert" aria-live="assertive">
-          <p style={{ marginBottom: '0.35rem' }}>{f.errorMessage}</p>
-          <p style={{ fontSize: '0.9rem', margin: 0 }}>
-            <a
-              href="mailto:ceo@ibrahimatraore.net"
-              style={{ color: 'inherit', textDecoration: 'underline', fontWeight: 600 }}
-            >
-              ceo@ibrahimatraore.net
-            </a>
-          </p>
+          {f.errorMessage}
         </div>
       )}
 
