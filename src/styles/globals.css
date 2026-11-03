@@ -1859,4 +1859,272 @@ a {
   }
 }
 
+/* ==========================================================================
+   SCROLL-REVEAL ANIMATIONS & LUXURY INTERACTIVE HOVER EFFECTS
+   ========================================================================== */
+
+/* 1. Top Muted-Gold Reading Progress Indicator */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2.5px;
+  background: linear-gradient(90deg, #173B38 0%, #A17D43 55%, #D6B57C 100%);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  z-index: 10001;
+  pointer-events: none;
+  transition: transform 80ms linear;
+}
+
+/* 2. Staggered Scroll-Reveal Engine */
+.scroll-reveal-item {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 720ms cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms),
+    transform 720ms cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms),
+    border-color var(--transition-med),
+    box-shadow var(--transition-med),
+    background-color var(--transition-med);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal-item.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 3. Staggered Hero Section Entrance Choreography */
+@keyframes heroElementRise {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-section .eyebrow {
+  animation: heroElementRise 640ms cubic-bezier(0.22, 1, 0.36, 1) 40ms both;
+}
+
+.hero-section .hero-name {
+  animation: heroElementRise 720ms cubic-bezier(0.22, 1, 0.36, 1) 120ms both;
+}
+
+.hero-section .hero-role {
+  animation: heroElementRise 720ms cubic-bezier(0.22, 1, 0.36, 1) 210ms both;
+}
+
+.hero-section .hero-intro {
+  animation: heroElementRise 720ms cubic-bezier(0.22, 1, 0.36, 1) 290ms both;
+}
+
+.hero-section .hero-supporting {
+  animation: heroElementRise 720ms cubic-bezier(0.22, 1, 0.36, 1) 360ms both;
+}
+
+.hero-section .btn-group {
+  animation: heroElementRise 720ms cubic-bezier(0.22, 1, 0.36, 1) 440ms both;
+}
+
+.hero-section .hero-visual-column {
+  animation: heroElementRise 840ms cubic-bezier(0.22, 1, 0.36, 1) 180ms both;
+}
+
+/* 4. Editorial Panel & Card Hover Effects (Expandable Gold Bar + Lift) */
+.editorial-panel,
+.partner-track-card,
+.ceo-letter-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.editorial-panel::after,
+.partner-track-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #A17D43 0%, #D6B57C 100%);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.editorial-panel:hover,
+.editorial-panel.scroll-reveal-item.is-visible:hover {
+  transform: translateY(-6px);
+  border-color: var(--color-accent);
+  box-shadow: 0 22px 44px -20px rgba(23, 37, 34, 0.18);
+}
+
+.editorial-panel:hover::after,
+.partner-track-card:hover::after {
+  transform: scaleX(1);
+}
+
+.partner-track-card:hover,
+.partner-track-card.scroll-reveal-item.is-visible:hover {
+  transform: translateY(-6px);
+  background-color: rgba(247, 245, 239, 0.09);
+  border-color: var(--color-accent-accessible-dark);
+  box-shadow: 0 24px 48px -20px rgba(0, 0, 0, 0.48);
+}
+
+.ceo-letter-card:hover,
+.ceo-letter-card.scroll-reveal-item.is-visible:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-accent);
+  box-shadow: 0 26px 52px -22px rgba(23, 37, 34, 0.2);
+}
+
+/* 5. Executive Portrait & Context Image Frame Hover Effects */
+.pitch-architectural-frame {
+  transition:
+    transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pitch-architectural-frame img,
+.partner-cta-image-wrap img {
+  transition: transform 780ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pitch-architectural-frame:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-accent);
+  box-shadow: 0 24px 48px -20px rgba(23, 37, 34, 0.22);
+}
+
+.section-dark .pitch-architectural-frame:hover {
+  border-color: #D6B57C;
+  box-shadow: 0 32px 64px -20px rgba(0, 0, 0, 0.58);
+}
+
+.pitch-architectural-frame:hover img,
+.partner-cta-credential-card:hover .partner-cta-image-wrap img {
+  transform: scale(1.035);
+}
+
+.pitch-architectural-frame::before {
+  transition: border-color 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pitch-architectural-frame:hover::before {
+  border-color: rgba(161, 125, 67, 0.85);
+}
+
+/* 6. Button Hover Sheen, Lift & Arrow Glide */
+.btn {
+  position: relative;
+  overflow: hidden;
+  transition:
+    background-color 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    color 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -110%;
+  width: 65%;
+  height: 100%;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.16) 50%,
+    transparent 100%
+  );
+  transition: left 560ms cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.btn:hover::before {
+  left: 135%;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -10px rgba(23, 37, 34, 0.32);
+}
+
+.section-dark .btn:hover {
+  box-shadow: 0 12px 28px -10px rgba(0, 0, 0, 0.45);
+}
+
+.btn span[aria-hidden='true'],
+.editorial-link span[aria-hidden='true'],
+.partner-track-link span[aria-hidden='true'] {
+  display: inline-block;
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.btn:hover span[aria-hidden='true'],
+.editorial-link:hover span[aria-hidden='true'],
+.partner-track-link:hover span[aria-hidden='true'] {
+  transform: translateX(5px);
+}
+
+/* 7. Navigation Link & Topic Pill Hover Polish */
+.main-nav-link::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1.5px;
+  background-color: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.main-nav-link:hover::before {
+  transform: scaleX(1);
+}
+
+.topic-pill {
+  transition:
+    background-color 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    color 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.topic-pill:hover {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-bg-main);
+  transform: translateY(-1px);
+}
+
+.leadership-table tbody tr {
+  transition: background-color 220ms ease;
+}
+
+.leadership-table tbody tr:hover {
+  background-color: rgba(161, 125, 67, 0.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal-item {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+
 

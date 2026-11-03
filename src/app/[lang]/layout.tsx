@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { LOCALES, getDictionary, isValidLocale } from '@/i18n';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import { ScrollRevealObserver } from '@/components/ScrollRevealObserver';
 
 export function generateStaticParams() {
   return LOCALES.map((lang) => ({ lang }));
@@ -25,6 +26,7 @@ export default async function LocaleLayout({
 
   return (
     <>
+      <ScrollRevealObserver />
       <Header locale={lang} dict={dict} />
       <main id="main-content">{children}</main>
       <Footer locale={lang} dict={dict} />
