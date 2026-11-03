@@ -8,7 +8,7 @@ export const SITE_CONFIG = {
   siteUrl: (process.env.NEXT_PUBLIC_SITE_URL || 'https://ibrahimatraore.net').replace(/\/+$/, ''),
   enforceHttps: process.env.NEXT_PUBLIC_ENFORCE_HTTPS === 'true',
   preferredHost: process.env.NEXT_PUBLIC_PREFERRED_HOST || 'ibrahimatraore.net',
-  googleSiteVerification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '',
+  googleSiteVerification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || 'google78ed1f30c8cef2cf',
   bingSiteVerification: process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION || '',
   verifiedEmail: process.env.NEXT_PUBLIC_VERIFIED_EMAIL || '',
   socialLinks: {
