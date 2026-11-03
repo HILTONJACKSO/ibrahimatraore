@@ -52,8 +52,8 @@ This script automatically:
 1. Installs **Node.js 20 LTS**, **PM2**, **Nginx**, **Certbot**, and **UFW Firewall**.
 2. Copies `.env.example` to `/var/www/ibrahimatraore.net/.env`.
 3. Runs `npm ci` and `npm run build`.
-4. Starts the app under PM2 (`ibrahimatraore-web` on port `3008`) and registers PM2 to auto-start on server reboot.
-5. Configures Nginx (`/etc/nginx/sites-available/ibrahimatraore.net`) to proxy `ibrahimatraore.net` to `127.0.0.1:3008`.
+4. Starts the app under PM2 (`ibrahimatraore-web` on port `3010`) and registers PM2 to auto-start on server reboot.
+5. Configures Nginx (`/etc/nginx/sites-available/ibrahimatraore.net`) to proxy `ibrahimatraore.net` to `127.0.0.1:3010`.
 
 ---
 

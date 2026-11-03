@@ -7,7 +7,7 @@
 # SAFE FOR MULTI-SITE VPS:
 # - Does NOT remove /etc/nginx/sites-enabled/default or any other site config
 # - Does NOT alter existing PM2 apps, databases, or firewall rules
-# - Only adds /var/www/ibrahimatraore.net, PM2 app "ibrahimatraore-web" (port 3008),
+# - Only adds /var/www/ibrahimatraore.net, PM2 app "ibrahimatraore-web" (port 3010),
 #   and /etc/nginx/sites-available/ibrahimatraore.net
 # ============================================================================
 
@@ -34,9 +34,9 @@ if ! command -v pm2 >/dev/null 2>&1; then
   npm install -g pm2
 fi
 
-echo "==> [2/5] Checking port 3008 is free (protects your other sites)..."
-if ss -tln | grep -q ':3008 ' && ! pm2 describe ibrahimatraore-web >/dev/null 2>&1; then
-  echo "ERROR: Port 3008 is already used by another service on this VPS."
+echo "==> [2/5] Checking port 3010 is free (protects your other sites)..."
+if ss -tln | grep -q ':3010 ' && ! pm2 describe ibrahimatraore-web >/dev/null 2>&1; then
+  echo "ERROR: Port 3010 is already used by another service on this VPS."
   echo "Pick a free port, then edit 'args' and 'PORT' in ecosystem.config.cjs and proxy_pass in deploy/nginx-ibrahimatraore.net.conf."
   echo "Ports currently listening:"
   ss -tlnp | grep LISTEN
@@ -65,7 +65,7 @@ cd "${APP_DIR}"
 npm ci
 npm run build
 
-echo "==> [5/5] Starting/Reloading ONLY 'ibrahimatraore-web' in PM2 (port 3008) & adding Nginx vhost..."
+echo "==> [5/5] Starting/Reloading ONLY 'ibrahimatraore-web' in PM2 (port 3010) & adding Nginx vhost..."
 pm2 reload ibrahimatraore-web --update-env 2>/dev/null || pm2 start ecosystem.config.cjs
 pm2 save
 
@@ -80,7 +80,7 @@ echo ""
 echo "============================================================================"
 echo " Safe Multi-Site Deployment Complete for ${DOMAIN}!"
 echo " App Directory : ${APP_DIR}"
-echo " Local Port    : 127.0.0.1:3008 (PM2 process: ibrahimatraore-web)"
+echo " Local Port    : 127.0.0.1:3010 (PM2 process: ibrahimatraore-web)"
 echo " Nginx Config  : /etc/nginx/sites-available/ibrahimatraore.net"
 echo " Optional SSL  : certbot --nginx -d ${DOMAIN} -d ${WWW_DOMAIN} --non-interactive --agree-tos -m ${ADMIN_EMAIL} --redirect"
 echo "============================================================================"
