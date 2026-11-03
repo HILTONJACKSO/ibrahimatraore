@@ -352,6 +352,11 @@ a {
   overflow-wrap: break-word;
 }
 
+.section-dark .hero-name {
+  color: var(--color-bg-main);
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.22);
+}
+
 .page-heading {
   font-family: var(--font-serif);
   font-size: var(--size-page-heading);
