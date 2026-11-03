@@ -117,6 +117,37 @@ export default async function ContactPage({
                     </a>
                   </div>
                 )}
+
+                {SITE_CONFIG.socialLinks.linkedin && (
+                  <div
+                    style={{
+                      paddingTop: '1.25rem',
+                      marginTop: '1.25rem',
+                      borderTop: '1px solid var(--color-rule-light)',
+                    }}
+                  >
+                    <span className="meta-item-label">LinkedIn</span>
+                    <a
+                      href={SITE_CONFIG.socialLinks.linkedin}
+                      target="_blank"
+                      rel="me noopener noreferrer"
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.4rem',
+                        fontFamily: 'var(--font-serif)',
+                        fontSize: '1.08rem',
+                        fontWeight: 600,
+                        color: 'var(--color-primary)',
+                        textDecoration: 'underline',
+                        textUnderlineOffset: '4px',
+                      }}
+                    >
+                      <span>Ibrahima Traore — LinkedIn</span>
+                      <span aria-hidden="true">↗</span>
+                    </a>
+                  </div>
+                )}
               </div>
 
               <div

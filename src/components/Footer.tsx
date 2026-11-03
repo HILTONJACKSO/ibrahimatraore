@@ -69,7 +69,7 @@ export function Footer({ locale, dict }: FooterProps) {
                 <a
                   href={SITE_CONFIG.socialLinks.linkedin}
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="me noopener noreferrer"
                   className="footer-link"
                   style={{
                     display: 'inline-flex',
@@ -78,7 +78,7 @@ export function Footer({ locale, dict }: FooterProps) {
                     fontWeight: 500,
                   }}
                 >
-                  <span>LinkedIn</span>
+                  <span>LinkedIn — Ibrahima Traore</span>
                   <span aria-hidden="true">↗</span>
                 </a>
               </div>

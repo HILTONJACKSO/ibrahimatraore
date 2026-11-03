@@ -12,7 +12,9 @@ export const SITE_CONFIG = {
   bingSiteVerification: process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION || '',
   verifiedEmail: process.env.NEXT_PUBLIC_VERIFIED_EMAIL || '',
   socialLinks: {
-    linkedin: process.env.NEXT_PUBLIC_LINKEDIN_URL || '',
+    linkedin:
+      process.env.NEXT_PUBLIC_LINKEDIN_URL ||
+      'https://www.linkedin.com/in/ibrahima-traore-878179449',
   },
   features: {
     enableInsights: process.env.NEXT_PUBLIC_ENABLE_INSIGHTS === 'true',
