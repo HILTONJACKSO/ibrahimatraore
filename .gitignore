@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Next.js build output
+.next/
+out/
+build/
+dist/
+
+# Environment variables & secrets (keep .env.example tracked)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.production
+
+# Server-side enquiry backup logs (persisted on VPS only)
+data/
+*.jsonl
+
+# Logs & PM2
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pm2/
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+*.pem
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts

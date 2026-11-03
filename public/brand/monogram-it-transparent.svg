@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none" role="img" aria-label="IT Monogram — Ibrahima Traore">
+  <title>IT — Ibrahima Traore</title>
+  <!-- Distinctive Capital 'I' with classic calligraphic head-loop -->
+  <path
+    d="M 24 46 C 21 31, 39 22, 53 26 C 59 28, 56 36, 47 38 C 41 54, 34 76, 27 90 C 23 97, 15 97, 13 91 C 11 85, 19 80, 31 81 C 43 82, 53 77, 60 69"
+    stroke="#173B38"
+    stroke-width="4.2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <!-- Distinctive Capital 'T' interlocking harmoniously -->
+  <path
+    d="M 56 38 C 70 31, 93 26, 114 29"
+    stroke="#173B38"
+    stroke-width="4.2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M 86 29 C 80 48, 72 72, 64 89 C 60 97, 53 98, 50 92 C 48 87, 54 81, 64 80 C 75 79, 87 82, 97 76"
+    stroke="#173B38"
+    stroke-width="4.2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <!-- Muted Gold Accent Point -->
+  <circle cx="104" cy="82" r="3.2" fill="#A17D43" />
+</svg>

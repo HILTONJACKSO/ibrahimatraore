@@ -1,0 +1,183 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import sharp from 'sharp';
+
+const ROOT = process.cwd();
+const BRAND_DIR = path.join(ROOT, 'public', 'brand');
+const FONTS_DIR = path.join(ROOT, 'public', 'fonts');
+const PUBLIC_DIR = path.join(ROOT, 'public');
+const IMAGES_DIR = path.join(ROOT, 'public', 'images');
+
+const signaturePathI =
+  'M 28 44 C 24 27, 45 15, 62 19 C 70 21, 67 31, 56 33 C 49 52, 40 78, 32 95 C 27 104, 16 104, 14 96 C 12 89, 22 83, 36 84 C 52 85, 67 80, 79 72';
+const signaturePathBrahima =
+  'M 79 72 C 88 54, 98 30, 102 22 C 105 16, 97 18, 93 29 C 87 46, 80 72, 82 82 C 84 90, 96 89, 102 80 C 107 72, 104 64, 97 66 C 92 67, 94 75, 104 75 C 112 75, 117 67, 121 63 C 125 60, 130 62, 128 69 C 126 76, 125 83, 131 84 C 138 85, 146 76, 152 68 C 156 63, 147 61, 141 66 C 134 72, 133 82, 140 84 C 146 86, 153 77, 157 68 C 155 76, 155 83, 162 84 C 170 85, 180 65, 188 44 C 194 28, 198 18, 194 17 C 189 16, 182 34, 176 56 C 171 73, 169 84, 171 84 C 174 84, 181 69, 187 66 C 193 63, 195 72, 194 79 C 193 85, 200 86, 206 79 C 211 73, 214 66, 215 64 C 213 73, 213 82, 219 83 C 225 84, 232 74, 237 66 C 240 62, 243 66, 241 74 C 239 80, 238 83, 241 83 C 245 83, 251 71, 256 66 C 261 62, 264 67, 262 75 C 260 81, 259 84, 263 84 C 268 84, 276 72, 282 66 C 287 61, 290 66, 287 75 C 285 81, 287 85, 294 84 C 302 83, 312 75, 318 67 C 322 62, 314 60, 307 66 C 300 72, 299 82, 306 84 C 313 85, 320 77, 324 68 C 322 76, 323 83, 331 84 C 339 85, 348 78, 355 71';
+const signaturePathTBar =
+  'M 358 34 C 378 26, 424 18, 468 20 C 496 21, 520 25, 536 22';
+const signaturePathTStem =
+  'M 412 22 C 403 44, 391 74, 381 94 C 376 103, 367 104, 364 97 C 361 91, 369 83, 380 82';
+const signaturePathRaore =
+  'M 392 78 C 398 70, 404 62, 408 61 C 413 60, 416 63, 414 70 C 412 77, 412 83, 418 84 C 425 85, 434 76, 440 67 C 444 62, 436 60, 429 66 C 422 72, 421 82, 428 84 C 434 85, 441 77, 445 68 C 443 76, 444 83, 451 84 C 458 85, 467 76, 472 67 C 476 61, 468 59, 461 65 C 455 71, 455 82, 463 84 C 471 86, 478 78, 480 69 C 481 63, 476 60, 472 63 C 469 66, 473 71, 481 70 C 488 69, 493 63, 497 61 C 501 59, 505 63, 502 71 C 500 78, 500 83, 506 84 C 513 85, 522 78, 527 70 C 531 64, 526 59, 520 63 C 513 68, 512 79, 520 83 C 529 87, 543 82, 552 74';
+const signaturePathFlourish =
+  'M 88 106 C 185 100, 340 97, 498 102 C 514 103, 528 101, 536 98';
+
+function buildOgSvg({ eyebrow, role, taglineL1, taglineL2 }) {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#173B38" />
+  <rect x="28" y="28" width="1144" height="574" rx="2" stroke="#A17D43" stroke-width="1.2" stroke-opacity="0.45" />
+
+  <!-- Top Eyebrow -->
+  <text x="72" y="108" fill="#D2AF74" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" letter-spacing="4">${eyebrow}</text>
+  <line x1="72" y1="126" x2="196" y2="126" stroke="#A17D43" stroke-width="1.5" />
+
+  <!-- Main Executive Name -->
+  <text x="72" y="226" fill="#F7F5EF" font-family="Georgia, 'Times New Roman', serif" font-size="68" font-weight="600" letter-spacing="-1">Ibrahima Traore</text>
+
+  <!-- Role -->
+  <text x="72" y="290" fill="#E8E9E0" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="500">${role}</text>
+
+  <!-- Tagline -->
+  <text x="72" y="346" fill="#B9C3BD" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="400">${taglineL1}</text>
+  <text x="72" y="374" fill="#B9C3BD" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="400">${taglineL2}</text>
+
+  <!-- Signature Wordmark Placed Bottom Left -->
+  <g transform="translate(60, 435) scale(0.78)">
+    <path d="${signaturePathI}" stroke="#F7F5EF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="${signaturePathBrahima}" stroke="#F7F5EF" stroke-width="2.65" stroke-linecap="round" stroke-linejoin="round" />
+    <circle cx="218" cy="50" r="2.3" fill="#F7F5EF" />
+    <path d="${signaturePathTBar}" stroke="#F7F5EF" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="${signaturePathTStem}" stroke="#F7F5EF" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="${signaturePathRaore}" stroke="#F7F5EF" stroke-width="2.65" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="${signaturePathFlourish}" stroke="#A17D43" stroke-width="1.8" stroke-linecap="round" />
+  </g>
+</svg>`;
+}
+
+async function main() {
+  await fs.mkdir(BRAND_DIR, { recursive: true });
+  await fs.mkdir(FONTS_DIR, { recursive: true });
+
+  // 1. Convert Signature SVGs to transparent PNGs (3x resolution: 1680x390)
+  const signatures = ['signature-forest', 'signature-ivory', 'signature-monochrome'];
+  for (const name of signatures) {
+    const svgPath = path.join(BRAND_DIR, `${name}.svg`);
+    const pngPath = path.join(BRAND_DIR, `${name}.png`);
+    const svgBuffer = await fs.readFile(svgPath);
+    await sharp(svgBuffer, { density: 300 })
+      .resize(1680, 390)
+      .png({ compressionLevel: 9 })
+      .toFile(pngPath);
+  }
+
+  // 2. Convert Monogram SVGs to PNGs & Favicons
+  const monogramSvg = await fs.readFile(path.join(BRAND_DIR, 'monogram-it.svg'));
+  const monogramTransSvg = await fs.readFile(path.join(BRAND_DIR, 'monogram-it-transparent.svg'));
+
+  await sharp(monogramSvg, { density: 300 })
+    .resize(512, 512)
+    .png()
+    .toFile(path.join(BRAND_DIR, 'monogram-it.png'));
+
+  await sharp(monogramTransSvg, { density: 300 })
+    .resize(512, 512)
+    .png()
+    .toFile(path.join(BRAND_DIR, 'monogram-it-transparent.png'));
+
+  await sharp(monogramSvg, { density: 300 })
+    .resize(32, 32)
+    .png()
+    .toFile(path.join(PUBLIC_DIR, 'favicon-32x32.png'));
+
+  await sharp(monogramSvg, { density: 300 })
+    .resize(16, 16)
+    .png()
+    .toFile(path.join(PUBLIC_DIR, 'favicon-16x16.png'));
+
+  await sharp(monogramSvg, { density: 300 })
+    .resize(180, 180)
+    .png()
+    .toFile(path.join(PUBLIC_DIR, 'apple-touch-icon.png'));
+
+  await sharp(monogramSvg, { density: 300 })
+    .resize(192, 192)
+    .png()
+    .toFile(path.join(PUBLIC_DIR, 'icon-192.png'));
+
+  await sharp(monogramSvg, { density: 300 })
+    .resize(512, 512)
+    .png()
+    .toFile(path.join(PUBLIC_DIR, 'icon-512.png'));
+
+  // 3. Generate Localized Open Graph Social Preview Images (1200x630) with Executive Portrait
+  const portraitFile = path.join(IMAGES_DIR, 'ibrahima-traore-desk-portrait.jpg');
+  let portraitOverlayBuffer = null;
+  try {
+    portraitOverlayBuffer = await sharp(portraitFile)
+      .resize(420, 510, { fit: 'cover', position: 'top' })
+      .extend({
+        top: 2,
+        bottom: 2,
+        left: 2,
+        right: 2,
+        background: { r: 161, g: 125, b: 67, alpha: 1 },
+      })
+      .png()
+      .toBuffer();
+  } catch {
+    // Portrait optional if not present
+  }
+
+  const ogConfigs = [
+    {
+      lang: 'en',
+      eyebrow: 'FOOTBALL · INVESTMENT · BUSINESS',
+      role: 'CEO, Sport World Africa &amp; Kouankan IV SL',
+      taglineL1: 'Working at the intersection of football representation,',
+      taglineL2: 'sporting investment, and business.',
+    },
+    {
+      lang: 'fr',
+      eyebrow: 'FOOTBALL · INVESTISSEMENT · AFFAIRES',
+      role: 'PDG, Sport World Africa &amp; Kouankan IV SL',
+      taglineL1: 'À la croisée de la représentation de footballeurs,',
+      taglineL2: 'de l’investissement sportif et des affaires.',
+    },
+    {
+      lang: 'es',
+      eyebrow: 'FÚTBOL · INVERSIÓN · NEGOCIOS',
+      role: 'CEO, Sport World Africa y Kouankan IV SL',
+      taglineL1: 'En la intersección de la representación de futbolistas,',
+      taglineL2: 'la inversión deportiva y los negocios.',
+    },
+  ];
+
+  for (const cfg of ogConfigs) {
+    const svgContent = buildOgSvg(cfg);
+    const svgPath = path.join(BRAND_DIR, `og-${cfg.lang}.svg`);
+    const pngPath = path.join(BRAND_DIR, `og-${cfg.lang}.png`);
+    await fs.writeFile(svgPath, svgContent, 'utf8');
+
+    let pipeline = sharp(Buffer.from(svgContent), { density: 150 }).resize(1200, 630);
+    if (portraitOverlayBuffer) {
+      pipeline = pipeline.composite([
+        {
+          input: portraitOverlayBuffer,
+          left: 716,
+          top: 58,
+        },
+      ]);
+    }
+    await pipeline.png({ compressionLevel: 9 }).toFile(pngPath);
+    console.log(`Generated ${pngPath}`);
+  }
+
+  await fs.copyFile(
+    path.join(BRAND_DIR, 'og-en.png'),
+    path.join(BRAND_DIR, 'og-default.png')
+  );
+}
+
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
