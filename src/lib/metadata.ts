@@ -20,10 +20,28 @@ export function buildPageMetadata(locale: Locale, page: PageKey): Metadata {
     verificationOther['msvalidate.01'] = SITE_CONFIG.bingSiteVerification;
   }
 
+  const portraitUrl = `${SITE_CONFIG.siteUrl}${SITE_CONFIG.portraits.heroDesk}`;
+
   return {
     metadataBase: new URL(SITE_CONFIG.siteUrl),
     title: meta.title,
     description: meta.description,
+    applicationName: SITE_CONFIG.name,
+    authors: [{ name: SITE_CONFIG.name, url: SITE_CONFIG.siteUrl }],
+    creator: SITE_CONFIG.name,
+    publisher: SITE_CONFIG.name,
+    keywords: [
+      'Ibrahima Traore',
+      'Ibrahima Traoré',
+      'Ibrahima Traore CEO',
+      'Ibrahima Traore Official Website',
+      'Sport World Africa',
+      'Kouankan IV SL',
+      'Ibrahima Traore Spain',
+      'Ibrahima Traore Football',
+      'Sport World Africa CEO',
+      'Kouankan IV SL CEO',
+    ],
     alternates: {
       canonical: canonicalUrl,
       languages: alternates,
@@ -43,13 +61,19 @@ export function buildPageMetadata(locale: Locale, page: PageKey): Metadata {
           height: 630,
           alt: `${SITE_CONFIG.name} — ${dict.home.hero.role}`,
         },
+        {
+          url: portraitUrl,
+          width: 1200,
+          height: 1500,
+          alt: `Ibrahima Traore — Official Executive Portrait (${dict.home.hero.role})`,
+        },
       ],
     },
     twitter: {
       card: 'summary_large_image',
       title: meta.title,
       description: meta.description,
-      images: [ogImageUrl],
+      images: [ogImageUrl, portraitUrl],
     },
     icons: {
       icon: [

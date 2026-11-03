@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 import {
   LOCALES,
   PAGE_SLUGS,
+  SITE_CONFIG,
   getCanonicalUrl,
   getLanguageAlternates,
   type PageKey,
@@ -10,6 +11,13 @@ import {
 export default function sitemap(): MetadataRoute.Sitemap {
   const pages = Object.keys(PAGE_SLUGS) as PageKey[];
   const lastModified = new Date();
+  const baseUrl = SITE_CONFIG.siteUrl;
+
+  const portraitUrls = [
+    `${baseUrl}${SITE_CONFIG.portraits.heroDesk}`,
+    `${baseUrl}${SITE_CONFIG.portraits.officeStanding}`,
+    `${baseUrl}${SITE_CONFIG.portraits.leadership}`,
+  ];
 
   const entries: MetadataRoute.Sitemap = [];
 
@@ -23,8 +31,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
         ? 0.8
         : 0.4;
 
-    const changeFrequency = page === 'privacy' ? 'yearly' : 'monthly';
+    const changeFrequency = page === 'privacy' ? 'yearly' : 'weekly';
     const languages = getLanguageAlternates(page);
+    const includeImages = page === 'home' || page === 'profile' || page === 'companies';
 
     for (const locale of LOCALES) {
       entries.push({
@@ -32,6 +41,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         lastModified,
         changeFrequency,
         priority,
+        ...(includeImages ? { images: portraitUrls } : {}),
         alternates: {
           languages,
         },
